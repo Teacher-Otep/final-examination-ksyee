@@ -9,7 +9,6 @@
 </head>
 <body>
     <nav class="navbar">
-            <img src="../images/northhub.svg" id="logo"></img>
         <img src="../images/kim.svg.svg" id="logo" style="cursor: pointer;">
         <button class="navbarbuttons" onclick="showSection('create')"> Create </button>
         <button class="navbarbuttons" onclick="showSection('read')"> Read </button>
