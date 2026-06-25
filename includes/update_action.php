@@ -2,30 +2,31 @@
 require_once __DIR__ . '/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST['id'] ?? '';
     $name = $_POST['name'] ?? '';
     $surname = $_POST['surname'] ?? '';
     $middlename = $_POST['middlename'] ?? '';
     $address = $_POST['address'] ?? '';
     $contact = $_POST['contact'] ?? '';
 
-    // Validate that required fields are filled out
-    if (empty($name) || empty($surname)) {
-        die("Error: Name and Surname are required.");
+    if (empty($id)) { 
+        die("Missing Student ID."); 
     }
 
     try {
-        $sql = "INSERT INTO students (name, surname, middlename, address, contact_number) 
-                VALUES (:name, :surname, :middlename, :address, :contact)";
+        $sql = "UPDATE students 
+                SET name = :name, surname = :surname, middlename = :middlename, address = :address, contact_number = :contact 
+                WHERE id = :id";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':name'       => $name,
             ':surname'    => $surname,
             ':middlename' => $middlename,
             ':address'    => $address,
-            ':contact'    => $contact
+            ':contact'    => $contact,
+            ':id'         => $id
         ]);
         
-        // Redirect back to main page with success parameter
         header("Location: ../public/index.php?status=success");
         exit();
     } catch (PDOException $e) {
